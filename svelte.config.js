@@ -16,12 +16,16 @@ const config = {
 		
 		// expose vite config
 		vite: () => ({
+			ssr: {
+				noExternal: ["d3", "d3-geo", "d3-scale", "d3-array", "d3-interpolate", "d3-format", "d3-time", "d3-time-format", "d3-selection",
+					"@splidejs/splide/dist/js/splide.js", "@splidejs/splide/dist/js"]
+			},
 			plugins: [WindiCSS()],
 			resolve: {
 				alias: {
 					$stores: resolve('./src/stores')
 				}
-			}
+			},
 		}),
 
 		// use adapter to generate build directory

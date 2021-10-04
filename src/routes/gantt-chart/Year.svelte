@@ -1,5 +1,6 @@
 <script>
-    import {scaleLinear, scaleTime} from '../../../node_modules/d3-scale/src/index.js';
+    // import {scaleLinear, scaleTime} from 'd3';
+    import * as d3 from 'd3';
     import {hoveredStateCode} from '$stores/selection'; 
     import { onMount } from 'svelte';
     import { fade, fly } from 'svelte/transition';
@@ -17,13 +18,13 @@
         return +new Date(year,11,31);
     }
 
-    $: scale =  scaleLinear()
+    $: scale =  d3.scaleLinear()
                     .domain([getFirstDayOfYear(year), getLastDayOfYear(year)])
                     .range([0, 100])
    
 
 
-    let scale2 =  scaleTime()
+    let scale2 =  d3.scaleTime()
                     .domain([new Date(2021,0,1), new Date(2021,11,31)])
                     .range([0, 100])
                     .ticks()

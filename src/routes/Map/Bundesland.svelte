@@ -30,21 +30,19 @@
     
     
     stroke-width="1"
-    class="fill-{ holiday ? holiday.type.toLowerCase() : "default"}{$hoveredStateCode== stateCode ? "-active" : ""} stroke-white"
+    class="fill-{ holiday ? holiday.type.toLowerCase() : "default"}{$hoveredStateCode== stateCode ? "-active" : ""} stroke-gray-800"
 
    
     d={geoGenerator(bundesland)}
 />
 
 <style>
-    .stroke-custom{
-        stroke: theme('colors.gray.900');
-    }
+
     .fill-default{
-        fill: theme('colors.gray.300')
+        fill: theme('colors.gray.700')
     }
     .fill-default-active{
-        fill: theme('colors.gray.400')
+        fill: theme('colors.gray.600')
     }
     .is-selected{
         fill: white;

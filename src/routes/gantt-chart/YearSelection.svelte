@@ -39,20 +39,23 @@
 
 </script>
 
-<div class="year-selection">
-    <button class:muted={!isDecrementable} on:click={decrementYear}>
+<div class="year-selection ">
+    <button class:muted={!isDecrementable} on:click={decrementYear} class="btn">
         -
     </button>
-    <div>
+    <div class="text-xl mx-3 text-gray-300">
         {$selectedYear}
     </div>
-    <button  class:muted={!isIncrementable} on:click={incrementYear}>
+    <button  class:muted={!isIncrementable} on:click={incrementYear} class="btn">
         +
     </button>
     
 </div>
 
 <style>
+    .btn{
+        @apply rounded-full w-7 h-7
+    }
     .tip{
         background: black;
         color: white;
@@ -61,11 +64,10 @@
         display: flex;
     }
     button{
-        background: white;
+        @apply bg-gray-400 shadow
     }
     button.muted{
-        background: darkgrey;
-        pointer-events: none;
+        @apply bg-gray-600 pointer-events-none
     }
 
 </style>

@@ -3,8 +3,9 @@
     import {selectedDate} from '$stores/selection'
     import { onMount } from 'svelte';
     import {whilePressed} from '../utils/whilePressed';
+import { style } from 'd3-selection';
 
-
+    
 
     function decrementDay(){
         selectedDate.update(date => {
@@ -35,14 +36,28 @@
 
 
 
-<div class="flex shadow-md">
-    <div class="w-12 bg-white rounded-l-md text-center " bind:this={decrementBtnRef}>
+<div class="flex shadow-md bg-gray-800  rounded h-6">
+    <button class="w-12 btn  text-center " bind:this={decrementBtnRef}>
         -
-    </div>
-    <div class="flex-1 bg-red-200 shadow-inner">
+    </button>
+    <div class="flex-1 ">
         <TimeLine/>
     </div>
-    <div class="w-12 bg-white text-center rounded-r-md shadow-md shadow-inner z-10" bind:this={incrementBtnRef}>
+    <button class="w-12 text-center btn  z-10" bind:this={incrementBtnRef}>
         +
-    </div>
+    </button>
 </div>
+
+<style>
+    .btn{
+        @apply text-blue-400 bg-gray-800
+    }
+
+    .btn:hover{
+        filter: brightness(1.2);
+    }
+
+    .btn:active{
+        filter: brightness(0.9)
+    }
+</style>

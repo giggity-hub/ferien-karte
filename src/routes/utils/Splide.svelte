@@ -2,6 +2,7 @@
 <script>
     import { onMount } from "svelte";
     import Splide from '@splidejs/splide';
+    // import {Splide} from './splide-v3/js/splide.esm';
     import { createEventDispatcher } from 'svelte';
 
     const dispatch = createEventDispatcher();
@@ -20,9 +21,7 @@
         })
     })
 
-    export function go(index){
-        splide.go(index)
-    }
+
 
     $: {
         if (splide){

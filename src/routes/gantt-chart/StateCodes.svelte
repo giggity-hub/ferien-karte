@@ -1,31 +1,36 @@
 <script>
     import {activeHolidays} from '$stores/holidays';
+    import {hoveredStateCode} from '$stores/selection'
     const stateCodes = ['BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH']
 
     $: color = (stateCode) =>{
         let holiday = $activeHolidays[stateCode]
-        console.log(holiday);
-        return holiday ? `text-${holiday.type.toLowerCase()}` : ''
+
+        let color = holiday ? holiday.type.toLowerCase() : 'default'
+        let modifier = $hoveredStateCode == stateCode ? '-active' : ''
+
+        return 'text-' + color + modifier
     }
 </script>
 
 
-<div class="shadow-2xl bg-white " >
+<div class="shadow-2xl  " >
     {#each stateCodes as stateCode}
-        <div class="h-10 flex justify-center items-center {color(stateCode)}" >{stateCode}</div>
+        <div class="h-10 flex justify-center items-center {color(stateCode)} 
+            border-r {$hoveredStateCode == stateCode ? 'border-gray-300' : 'border-transparent'}
+            {$hoveredStateCode == stateCode ? '' : 'opacity-70'}" >
+            {stateCode}
+        </div>
     {/each}
 </div>
 
 <style>
-    .shadow-sm-right{
-        @apply shadow-sm;
+    .text-default{
+        color: theme('colors.gray.300')
     }
-    .state-code{
-        flex-grow: 1;
-        background: green;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .text-default-active{
+        color: theme('colors.gray.100')
     }
+
 </style>
 

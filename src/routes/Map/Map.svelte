@@ -1,7 +1,8 @@
 <script>
     import bundesländer from './bundesländer.geo.json';
     import Bundesland from './Bundesland.svelte';
-    import {geoMercator, geoPath} from '../../../node_modules/d3-geo/src/index.js';
+    // import {geoMercator, geoPath} from 'd3';
+    import * as d3 from 'd3';
     import {createPopper} from '@popperjs/core'
     import { onMount } from 'svelte';
     // import coatOfArms from 'stores/coatOfArms.js';
@@ -11,8 +12,8 @@
     let width = 800;
 	let height = 900;
 
-	let projection = geoMercator().fitSize([width, height], bundesländer)
-	let geoGenerator = geoPath().projection(projection)
+	let projection = d3.geoMercator().fitSize([width, height], bundesländer)
+	let geoGenerator = d3.geoPath().projection(projection)
 
     let tooltipRef;
     let svgRef;
@@ -89,8 +90,8 @@
     isTransitionEnabled = false;
 }}/>
 
-<div class="p-5 h-full flex items-center">
-    <div bind:this={popperContext}  class="svg-container flex-1 bg-white flex items-center justify-center" >
+
+    <div bind:this={popperContext}  class="svg-container flex-1  flex items-center justify-center" >
 
     
         <div bind:this={tooltipRef}>
@@ -99,22 +100,19 @@
         
     
 
-    <svg viewBox="0 0 {width} {height}" class="max-h-full">
-        {#each bundesländer.features as bundesland,i}
-            <Bundesland on:show={handleShow} {bundesland} {geoGenerator}/>
-        {/each}
-     
-     </svg>
+        <svg viewBox="0 0 {width} {height}" class="max-h-full">
+            {#each bundesländer.features as bundesland,i}
+                <Bundesland on:show={handleShow} {bundesland} {geoGenerator}/>
+            {/each}
+        
+        </svg>
      
     </div>
-</div>
+
 
 
 <style>
 
-    .tooltip[data-show]{
-        background: orange !important;
-    }
     .svg-container{
         
         height: 100%;

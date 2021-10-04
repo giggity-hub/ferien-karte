@@ -14,7 +14,8 @@
     // import Test from '../Test.svelte';
     import Years from './Years.svelte';
     import DateSlider from './DateSlider.svelte';
-    import {selectedDate} from '$stores/selection';
+    import {firstDateOfSelectedYear, lastDateOfSelectedYear, selectedDate} from '$stores/selection';
+import RangeSlider from '../utils/RangeSlider.svelte';
 
     function getFirstDayOfYear(year){
         return new Date(year,0,1);
@@ -52,40 +53,50 @@
         return `${day}.${month}.${year}`
 
     }
+
+
+    let moped;
 </script>
 
-<div class="p-8 flex flex-col ">
+<div class="px-8 pb-12 flex flex-col ">
     
-        <div class="">
-            <h1 class=" text-2xl text-center font-medium p-4">
-                {formatDate($selectedDate)}
-            </h1>
-        
-            
-
-            <DateSlider/>
-            
-            
+        <div class="bg-gray-700 sticky top-0 z-100 pt-8">
+            <div class="border-bottom z-100  flex flex-col items-center space-y-5">
+                <h1 class=" text-2xl  font-medium text-gray-200 ">
+                    {formatDate($selectedDate)}
+                </h1>
+       
+                    <YearSelection />
+             
+                <div class="w-full">
+                    <DateSlider/>
+                </div>
+            </div>
         </div>
 
-        <div class="flex-grow-0 flex relative w-full overflow-hidden bg-white rounded-md mt-4" >
-            <div class="w-12  z-10">
+        <div class="flex-grow-0 flex relative w-full overflow-hidden bg-gray-700  " >
+            <div class="w-12  z-10 bg-gray-700   border-gray-600  bg-gradient-to-r from-gray-700  bg-opacity-95">
                 <StateCodes/>
             </div>
 
             <div class="min-w-0 flex-1">
-                <Years/>
+                <!-- <Years/> -->
                 <Line/>
             </div>
 
-            <div class="w-12   bg-gradient-to-r from-transparent  to-white z-10">
+            <div class="w-12   bg-gradient-to-l from-gray-700 bg-gray-700 bg-opacity-90  z-10   border-gray-600 shadow-lg">
             </div>
                 
             
         </div>
+        <div class="bg-black h-12">
+                <RangeSlider bind:value={$selectedDate} min={$firstDateOfSelectedYear} max={$lastDateOfSelectedYear} on:input={({detail})=> moped = detail.relX}>
+                    <div style="transform: translateX({moped}px)">0</div>
+                </RangeSlider>
 
-        <div class="bg-red-200 flex justify-center p-4">
-            <YearSelection />
+        
         </div>
+
+        
   
 </div>

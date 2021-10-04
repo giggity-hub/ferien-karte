@@ -5,7 +5,9 @@
 </script>
 
 <script>
-import {scaleLinear} from '../../../node_modules/d3-scale/src/index.js';
+
+// import {scaleLinear} from 'd3'
+import * as d3 from 'd3'
 import { onMount } from 'svelte';
 import { createEventDispatcher } from 'svelte';
 import {selectedDate, selectedYear, firstDateOfSelectedYear, lastDateOfSelectedYear} from '$stores/selection';
@@ -22,12 +24,13 @@ let unix;
 // export let max;
 // export let date;
 
+
 function clamp(num, [min, max]){
     return Math.min(Math.max(num, min), max);
 }
 
 let width = 0; //initial value damit der folgende code nicht breakt
-$: scaleDay = scaleLinear()
+$: scaleDay = d3.scaleLinear()
                 .domain([0, width])
                 .range([$firstDateOfSelectedYear, $lastDateOfSelectedYear])
                 .clamp(true)
@@ -36,7 +39,8 @@ $: scaleDay = scaleLinear()
 
 $:{
     // update the relX position if the date or width changes
-    relX.set(scaleDay.invert($selectedDate))
+    // relX.set(scaleDay.invert($selectedDate))
+    $relX = scaleDay.invert($selectedDate)
 }
 
 
@@ -68,6 +72,7 @@ function attachTouchMoveListener(e){
     }, {once: true})
 }
 
+// rangeListener(element, callback )
 
 const months = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"]
 </script>
@@ -77,14 +82,14 @@ const months = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep
 
 </div>
 <!-- on:touchend|preventDefault={detachMoveListener} -->
-<div bind:this={ref} class="range-wrapper relative bg-white" 
+<div bind:this={ref} class="range-wrapper relative h-full flex items-center" 
     on:touchstart|preventDefault={attachTouchMoveListener}
     on:mousedown|preventDefault={attachMouseMoveListener}
     
     >
-    <div class="slider__thumb h-4 w-0 p-3 -ml-3 bg-gray-600 rounded-full" style="transform: translateX({$relX}px)"></div>
+    <div class="slider__thumb ring-5 h-0 w-0 p-3 -ml-3 bg-blue-400 bg-opacity-70 z-100 rounded-full" style="transform: translateX({$relX}px)"></div>
 
-    <div class="flex justify-evenly">
+    <div class="flex justify-evenly flex-1 pointer-events-none ">
         {#each months as month}
             <div>{month}</div>
         {/each}
@@ -92,9 +97,10 @@ const months = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep
 </div>
 
 <style>
+    
     .slider__thumb{
         --thumbwidth : var(--trackheight);
-        
+        /* clip-path: polygon(50% 100%, 0 0, 100% 0); */
         /* width: var(--thumbwidth); */
         /* background: green; */
         pointer-events: none;
@@ -103,7 +109,7 @@ const months = ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sep
 
     }
     .range-wrapper{
-        --trackheight : 20px;
+        /* --trackheight : 20px; */
         /* background: yellow; */
         /* position: relative; */
         /* width: 100%; */

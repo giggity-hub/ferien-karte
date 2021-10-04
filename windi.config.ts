@@ -1,5 +1,6 @@
 import {defineConfig} from 'windicss/helpers';
 import colors from 'windicss/colors'
+import { color } from 'd3-color';
 
 const customColorNames = ['sommer', 'herbst', 'weihnachten', 'ostern', 'pfingsten', 'unterrichtsfrei', 'winter', 'halbjahr', 'other']
 
@@ -63,7 +64,20 @@ export default defineConfig({
     ]),
     theme: {
         extend: {
-            colors: customColors
+            colors: {
+                ...customColors,
+            }
+        },
+        boxShadow: {
+            'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.1)',
+            'DEFAULT': '0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.12)', // If a DEFAULT shadow is provided, it will be used for the non-suffixed shadow utility.
+            'md': '0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.12)',
+            'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
+            'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.08)',
+            '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+            '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.6)',
+            'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.12)',
+            'none': 'none',
         },
         // make custom colors available as stroke-sommer etc.
         // fill: customColors
