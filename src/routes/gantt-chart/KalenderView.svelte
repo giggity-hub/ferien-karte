@@ -80,7 +80,7 @@ import RangeSlider from '../utils/RangeSlider.svelte';
             </div>
 
             <div class="min-w-0 flex-1">
-                <!-- <Years/> -->
+                <Years/>
                 <Line/>
             </div>
 
